@@ -48,9 +48,14 @@ pipeline {
                     git config user.email "khaledtouatikhaled91@gmail.com"
                     git config user.name "khaled touati"
                     git checkout main
-                    BUILD_NUMBER=${BUILD_NUMBER}
+                    git pull origin main
+
+                    echo "Build number: ${BUILD_NUMBER}"
+
                     sed -i "s|__REPLACE_TAG__|${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                
                     git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                
                     if git diff --cached --quiet; then
                       echo "No changes to commit"
                     else
